@@ -11,7 +11,7 @@ public class Main {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(ndpf.getPanel());
-    frame.pack();
+         frame.pack();
         frame.setVisible(true);
 
 	// write your code here:s
