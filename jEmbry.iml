@@ -7,6 +7,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="com.miglayout:miglayou" level="project" />
+    <orderEntry type="library" name="miglayout-4.0" level="project" />
+    <orderEntry type="library" name="com.miglayout:miglayout-swing:5.0" level="project" />
+    <orderEntry type="library" name="miglayout-swing-5.0" level="application" />
+    <orderEntry type="library" name="miglayout-swing-5.0-sources" level="application" />
+    <orderEntry type="library" name="miglayout-core-5.0" level="application" />
   </component>
 </module>
