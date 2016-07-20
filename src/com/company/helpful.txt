@@ -1,0 +1,163 @@
+kdgregory.com
+Blog
+Food
+Programming
+Travel
+table of contents
+A Controller-based Approach to Swing Applications
+
+Far too many Swing applications follow the anti-pattern of subclassing a JDK container class in order to add components:
+
+public class MyPanel
+extends JPanel
+{
+    public MyPanel()
+    {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(new JLabel("Some text"));
+/*It makes for easier coding, to be sure: you simply construct your objects and drop them into parent containers. At one time this technique was used throughout the Swing tutorial (most of the examples have since been rewritten). You'll still find it in many of the demo programs provided with the JDK, and in some of the templates provided with NetBeans. But it's ugly from the perspective of object-oriented design, introduces the risk of namespace collisions, and may create reference chains that cause your programs to leak memory.
+
+My alternative is a variant of the model-view-controller pattern, in which I create application classes that fulfill the role of controller, with Swing components in the role of view and (usually) model. It's a little more work up front, but in the long run I believe it's more maintainable.
+
+Why Not Subclass?
+
+Object-oriented design uses subclassing to represent the “is-a” relationship. From a strictly syntactic viewpoint, subclassing a JPanel and adding components does not violate this relationship. From a behavioral viewpoint, however, a panel with child components is not the same as a panel without components.
+
+If an argument based on object-oriented philosophy isn't convincing, here's one based on implementation practicality: when you subclass, you inherit all the methods of the superclass, whether you want them or not. In the case of JPanel, there are over 300 such methods. At some point, you might want to use one of those method names for your own purposes — validate() being a prime example.
+
+Example: A Login Dialog
+
+Here's a simple login dialog. It's modal, has two input fields, one button that initiates logging into some service, and another that simply closes the dialog. It might be invoked from a menu item. a login dialog
+Dialogs are a great example of controller-based design because they have activity: when the user presses the "Login" button, the program has to do something. Since you'll already be writing some sort of controller class to handle that activity, it makes sense to move the dialog construction into a “create” method. Here's my approach (heavily abbreviated; the complete class is here):*/
+
+public class LoginDialogController
+{
+    private JFrame _owner;
+    private JDialog _dialog;
+    private JTextField _fUsername;
+    private JPasswordField _fPassword;
+    private Action _aLogin;
+    private Action _aCancel;
+
+    public LoginDialogController(JFrame owner)
+    {
+        _owner = owner;
+    }
+
+    public void show()
+    {
+        if (_dialog == null)
+            constructDialog();
+        _dialog.setVisible(true);
+    }
+
+    private void constructDialog()
+    {
+        // constructs the dialog and sets all instance variables
+    }
+
+    private class LoginAction
+    extends AbstractAction
+    {
+        // ...
+
+        public void actionPerformed(ActionEvent e)
+        {
+            // all of the actual login logic goes here
+            _dialog.dispose();
+        }
+    }
+
+    private class CancelAction
+    extends AbstractAction
+    {
+        // ...
+
+        public void actionPerformed(ActionEvent e)
+        {
+            _dialog.dispose();
+        }
+    }
+}
+This class is simple, but highlights a couple of my standard programming practices, and shows the benefit of a clean namespace. I'll treat each of these individually:
+
+Restricted Namespace
+
+To display the dialog, you call the method show(). That's how you'd display any dialog before JDK 1.5: the show() method is defined by Window, and is available for any top-level window. However, as-of JDK 1.5, this method was deprecated; you are now expected to call setVisible(true), which is defined by Component. The docs give no reason for this deprecation; I suspect it is simply to make the API more consistent.
+
+However, for a dialog, calling either show() or setVisible() is usually a bad idea. You'll generally want to configure the dialog before showing it, and with a modal dialog you'll want to retrieve the contents after the user closes it.
+
+If I were creating this dialog by subclassing JPanel, I'd have to add a new method that means “show,” but has a different name. Worse, the existing methods would still be publicly visible, meaning that they might be called by accident. By constructing the dialog from inside the controller, I avoid these problems and restrict the set of public names.
+
+Lazy Construction
+
+When you look at show(), you'll see that I actually build the dialog there, the first time that it's called. Why not build the dialog in the constructor?
+
+The answer is performance. Many applications build-out their entire GUI when the program starts, which leads to slow startup times. A single dialog doesn't take that long to construct, but all of the dialogs for a large application does. Moreover, it's unlikely that a user will invoke every dialog every time she runs the application, so why waste time building dialogs that are never used?. With lazy construction, the user gets quick application startup, and the time to build a single dialog is all but unnoticeable.
+
+To be honest, if you subclassed JDialog you could still use lazy build-out. But then you'd have to override both show() and setVisible(), to ensure that the dialog isn't accidentally displayed before it is completely built.
+
+Use of Components as Model
+
+In a true model-view-controller implementation, I would create a data model (say, LoginData) and add listeners to the dialog components to populate this model. And if I needed to share data between multiple windows, or multiple components in a single window, this approach makes sense. For this particular example, not so much.
+
+Instead, anything within the dialog that needs access to the username and password can retrieve it directly from the components. If I had the need, I could easily expose those values via accessor methods. As it is, my assumption is that they'll be used by the “login” action and nothing else.
+
+Action Implementation
+
+This dialog has two buttons: one starts the login process, one simply makes the dialog disappear. These are implemented as Actions, rather than ActionListeners. That's not driven by the use of a controller class; I simply find Action more convenient. It encapsulates all of the information needed to construct the buttons (name, event callback, mnemonic, &c), and can be shared in those situations where the same action may be invoked from multiple places (eg, main menu versus popup menu).
+
+One thing that is related to the controller implementation is that the actions are referenced by member variables. This means that they can be enabled or disabled while the program is running, based on program state. Combined with a monitoring class such as SwingLib's FieldWatcher, you can prevent the user from clicking the “Login” button until both fields are filled in (or validated).
+
+By encapsulating the login logic in an action, you also get the ability to use the same basic dialog for multiple services: simply construct the dialog around a user-supplied action. Of course, to do this you'll need to expose methods for the username and password, or create a callback interface to replace actionPerformed().
+
+Panels
+
+Dialog controllers are a clear win versus subclassing JDialog. But most of the subclassing within a Swing app is of JPanel, and here the argument becomes more difficult — and often relies on the philosophical reasoning that started this article. But assuming that you buy into the idea, the mechanics of a panel controller are simple: expose a create() method that does the build-out:
+
+public class ContentController
+{
+    // variables to hold components
+
+    public JPanel create()
+    {        
+        JPanel panel = new JPanel();
+        // add components
+        return panel;
+    }
+}
+In practice, I don't create a lot of panel controllers, but neither do I subclass JPanel. Instead, I build out all needed panels within the frame or dialog controller, using methods as needed to decompose the work.
+
+Controllers and Garbage Collection
+
+In the beginning of this article, I mentioned that subclassing Swing component classes can lead to memory leaks. That statement is somewhat disingenuous: if you carefully manage your listener relationships, and understand the internal listeners used by Swing components, you won't leak memory. But that's a big “if,” particularly in a complex application. Often, you'll end up with a cyclic graph of listeners and component references.
+
+In the controller-based approach, you confine any cycles to the controller: it holds references to the components, and the components (via listeners) may hold references back to the controller. But externally, there's only one reference: the controller itself. If you clear that reference, then the entire object graph is eligible for garbage collection.
+
+The downside is that, if you clear the sole reference to the controller, the entire object graph is eligible for garbage collection. You need to ensure that you don't accidentally clear this reference, for example by holding it in a local variable of the main() method and then allowing that method to exit. I rely on SwingUtilities.invokeAndWait() to prevent this from happening:
+
+public static void main(String[] argv)
+throws Exception
+{
+    final MainFrameController controller = new MainFrameController();
+    SwingUtilities.invokeAndWait(new Runnable()
+    {
+        public void run()
+        {
+            controller.show();
+        }
+    });
+}
+Dealing with Legacy Code
+
+Assuming that you agree with my basic approach, you may feel that you can't easily change your existing codebase. Most of the time, however, it's as simple as removing an extends clause, adding a create() method, and moving code from the constructor to that method:
+
+// this is legacy code, which subclasses JPanel
+frame.setContentPane(new MyContentPane());
+
+// we add a controller instance that only exists long enough to
+// create the actual panel
+frame.setContentPane(new ContentController().create());
+Frames and dialogs take a little more work, but not much: whatever happens within a constructor can easily be extracted into a method. And along the way, you might find that you avoid the “constructor calls overridable method” bug pattern.
+
+Copyright © Keith D Gregory, all rights reserved
