@@ -11,9 +11,18 @@ public class Main {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(ndpf.getPanel());
-         frame.pack();
+        frame.pack();
         frame.setVisible(true);
-
-	// write your code here:s
     }
+	// write your code here:s
+//        public static void main(String[] args) {
+//            //Schedule a job for the event dispatch thread:
+//            //creating and showing this application's GUI.
+//            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//                public void run() {
+//                    LookAndFeelDemo.createAndShowGUI();
+//                }
+//            });
+//        }
+
 }
