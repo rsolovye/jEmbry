@@ -7,11 +7,29 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="com.miglayout:miglayou" level="project" />
+    <orderEntry type="library" exported="" name="com.miglayout:miglayou" level="project" />
     <orderEntry type="library" name="miglayout-4.0" level="project" />
-    <orderEntry type="library" name="com.miglayout:miglayout-swing:5.0" level="project" />
-    <orderEntry type="library" name="miglayout-swing-5.0" level="application" />
-    <orderEntry type="library" name="miglayout-swing-5.0-sources" level="application" />
-    <orderEntry type="library" name="miglayout-core-5.0" level="application" />
+    <orderEntry type="library" exported="" name="com.miglayout:miglayout-swing:5.0" level="project" />
+    <orderEntry type="library" exported="" name="miglayout-swing-5.0" level="application" />
+    <orderEntry type="library" exported="" name="miglayout-swing-5.0-sources" level="application" />
+    <orderEntry type="library" exported="" name="miglayout-core-5.0" level="application" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/miglayout-core-5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/miglayout-swing-5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
