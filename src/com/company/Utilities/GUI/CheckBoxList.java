@@ -19,6 +19,8 @@ public class CheckBoxList extends JList {
                 if (index != -1) {
                     MyDataClass data = ((MyDataClass)listModel.get(index));
                     data.setSelected(!data.isSelected);
+                    System.out.println(data.getTextToDisplay());
+                    System.out.println(listModel.getSize());
                     listModel.set(index, data);
                 }
             }
