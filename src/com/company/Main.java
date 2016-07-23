@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.next.PunctureController;
+
 import javax.swing.*;
 
 public class Main {
@@ -8,9 +10,10 @@ public class Main {
         JFrame frame = new JFrame("Новая Пункция");
 
         NextDayPF ndpf = new NextDayPF();
-
+        PunctureController pc = new PunctureController();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(ndpf.getPanel());
+       // frame.add(ndpf.getPanel());
+       frame.add(pc.createGUI());
         frame.pack();
         frame.setVisible(true);
     }

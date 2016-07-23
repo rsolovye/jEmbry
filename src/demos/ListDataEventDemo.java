@@ -1,8 +1,8 @@
-
+package demos;
 /*
 
- *   java -cp .;jars/jlfgr-1_0.jar ListDataEventDemo [Microsoft Windows]
- *   java -cp .:jars/jlfgr-1_0.jar ListDataEventDemo [UNIX]
+ *   java -cp .;jars/jlfgr-1_0.jar demos.ListDataEventDemo [Microsoft Windows]
+ *   java -cp .:jars/jlfgr-1_0.jar demos.ListDataEventDemo [UNIX]
  */
 
 import java.awt.*;
@@ -283,7 +283,7 @@ public class ListDataEventDemo extends JPanel
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("ListDataEventDemo");
+        JFrame frame = new JFrame("demos.ListDataEventDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.

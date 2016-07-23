@@ -29,13 +29,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
-package com.company;
+package demos;
 
 /*
  * LookAndFeelDemo.java is a Java SE 6 example that requires
  * one other file (TestTheme.java).
  */
-import javax.swing.*;          
+import com.company.TestTheme;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.plaf.metal.*;
