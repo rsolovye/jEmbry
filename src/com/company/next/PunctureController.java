@@ -44,14 +44,14 @@ public class PunctureController {
 
              _listModels.add(lm);
 
+for (String keys : _listKeys) {
+    for (String vals : _dao.getListValues()) {
+        lm.addElement(vals);
+    }
 
-            for (String vals : _dao.getListValues(i)) {
-                lm.addElement(vals);
-            }
 
 
-
-            _view.addList("con_list_name" + i, lm);
+            _view.addList("" + i, lm);
 
 
         }
