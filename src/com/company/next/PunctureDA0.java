@@ -10,26 +10,32 @@ import java.util.Set;
  */
 public class PunctureDA0 {
 
-    private final ArrayList<String[]> hmListValues;
+    private final HashMap<String, <String[]> hmListValues;
     private final HashMap<String, String> hmSelectedValues;
     public PunctureDA0(){
-        hmListValues = new ArrayList<String[]>() ; //new HashMap<String, String[]>();
+        hmListValues = DB_TEMP.MAP; ; //new HashMap<String, String[]>();
         hmSelectedValues = new HashMap<String, String>();
-        get_lists_from_db();
+        
     }
 
-    private void get_lists_from_db(){
-        hmListValues.add(DB_TEMP.DOCTORS);
-        hmListValues.add(DB_TEMP.DIAGNOSES);
-        hmListValues.add(DB_TEMP.EMB);
-        hmListValues.add(DB_TEMP.FEM_SOURCE);
-        hmListValues.add(DB_TEMP.FEM_EGG_STATE);
-
+    public String[] getListValues(string pKey){
+            return hmListValues.get(pKey);
     }
 
-    public String[] getListValues(int index){
-            return hmListValues.get(index);
+    public hashmap<String, String[]> getListValues(string[] pKeySet){
+
+    HashMap<String, <String[]> tmp_Map = new HashMap<String, <String[]>();
+for (String s: pKeySet)
+{ 
+if (tmp_Map.contains(s)) {
+{
+tmp_Map.put(getListValues(s))
+}
+}
+            return tmp_Map;
     }
+
+
 
     public void setSelected(String key, String value){
         hmSelectedValues.put(key, value);

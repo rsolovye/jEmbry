@@ -11,5 +11,7 @@ public class DB_TEMP {
             EMB = {"Лямина ИВ", "Мурза ГВ", "Хандога АО", "Соловьев РС", "Черноштан К?"},
             FEM_EGG_STATE = {"свежие", "крио"},
             FEM_SOURCE = {"пациентка", "донор"};
+hashmap<String, String[]} = new hashmap<String, String[]>;
+ 
 
 }
