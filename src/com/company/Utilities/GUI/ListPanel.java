@@ -12,34 +12,40 @@ import javax.swing.event.ListSelectionListener;
 /**
  * Created by micro on 22.07.2016.
  */
-public class ListerListener extends JPanel implements ListSelectionListener {
+public class ListPanel extends JPanel implements ListSelectionListener {
     private JList list;
-    private DefaultListModel listModel;
+
+    public void set_listModel(DefaultListModel _listModel) {
+        this._listModel = _listModel;
+    }
+
+    private DefaultListModel _listModel;
     private NextDayPF_DAO l;
 
-    public ListerListener(String[] pData, NextDayPF_DAO lf){
-        super(new MigLayout("fillx, filly, grow"));
+    public ListPanel(String[] pData, NextDayPF_DAO lf){
+        super(new MigLayout(""));
 
-        listModel = new DefaultListModel();
-        listModel.addListDataListener(new MyListDataListener());
+        _listModel = new DefaultListModel();
+        _listModel.addListDataListener(new MyListDataListener());
 
         if (pData != null){
             for (String d : pData){
-                listModel.addElement(pData);
+                _listModel.addElement(d);
             }
         }
-        list = new JList(listModel);
+        list = new JList(_listModel);
         list.setSelectionMode(
                 ListSelectionModel.SINGLE_SELECTION);
         //list.setSelectedIndex(0);
         list.addListSelectionListener(this);
+        super.add(this.list);
     }
 
-    public void setDefaultSelectedIndex(String s){
-        list.setSelectedIndex(listModel.indexOf(s));
+    public void setSelection(String s){
+        list.setSelectedIndex(_listModel.indexOf(s));
     }
 
-    @Override
+
 
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
@@ -56,17 +62,17 @@ public class ListerListener extends JPanel implements ListSelectionListener {
     }
 
     private class MyListDataListener implements ListDataListener {
-        @Override
+
         public void intervalAdded(ListDataEvent e) {
 
         }
 
-        @Override
+
         public void intervalRemoved(ListDataEvent e) {
 
         }
 
-        @Override
+
         public void contentsChanged(ListDataEvent e) {
             System.out.println("contentsChanged: " + e.getIndex0() +
                     ", " + e.getIndex1());

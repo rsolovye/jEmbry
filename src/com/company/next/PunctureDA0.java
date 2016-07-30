@@ -1,5 +1,6 @@
 package com.company.next;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -21,6 +22,8 @@ public class PunctureDA0 {
         hmListValues.add(DB_TEMP.DOCTORS);
         hmListValues.add(DB_TEMP.DIAGNOSES);
         hmListValues.add(DB_TEMP.EMB);
+        hmListValues.add(DB_TEMP.FEM_SOURCE);
+        hmListValues.add(DB_TEMP.FEM_EGG_STATE);
 
     }
 
@@ -30,6 +33,7 @@ public class PunctureDA0 {
 
     public void setSelected(String key, String value){
         hmSelectedValues.put(key, value);
+        System.out.println(this.getClass().getName() + " @ " + LocalTime.now() + " : (" + key +  ", " + value + ").");
 
     }
 

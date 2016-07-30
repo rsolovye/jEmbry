@@ -1,5 +1,6 @@
 package com.company.next;
 
+import com.company.Utilities.GUI.ListPanel;
 import com.company.Utilities.GUI.Utils;
 import net.miginfocom.swing.MigLayout;
 
@@ -14,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.*;
 
+import static com.company.next.PunctureController._dao;
 import static java.time.LocalTime.*;
 
 /**
@@ -22,13 +24,15 @@ import static java.time.LocalTime.*;
 public class PunctureController {
     JButton _test_add = new JButton("TEST - Добавить");
 
-    PunctureView _view = new PunctureView();
-    PunctureDA0 _dao = new PunctureDA0();
+    static PunctureView _view = new PunctureView();
+    static PunctureDA0 _dao = new PunctureDA0();
     ArrayList<DefaultListModel> _listModels = new ArrayList<DefaultListModel>();
+
     public static ArrayList<JList> _list_of_lists = new ArrayList<JList>();
     HashMap<String, JList> _hmLists = new HashMap<String, JList>();
 
     public PunctureController() {
+        //get VALUES FOR LISTS
 
         for (int i = 0; i < _dao.getListNumber(); i++) {
 
@@ -36,61 +40,80 @@ public class PunctureController {
             DefaultListModel lm = new DefaultListModel();
 
 
-
-            _listModels.add(lm);
+             _listModels.add(lm);
 
 
             for (String vals : _dao.getListValues(i)) {
                 lm.addElement(vals);
             }
-            JList tmp = Utils.getList(lm, 4, ListSelectionModel.SINGLE_SELECTION);
 
-            tmp.setName("list" + i);
-            tmp.addListSelectionListener(new SharedListSelectionHandler());
 
-            _list_of_lists.add(tmp);
-            _hmLists.put(tmp.getName(), tmp);
+//            JList tmp = Utils.getList(lm, 4, ListSelectionModel.SINGLE_SELECTION);
+
+            //tmp.setName("list" + i);
+            //tmp.addListSelectionListener(new SharedListSelectionHandler());
+
+            //_list_of_lists.add(tmp);'
+            //'
+            _view.addList("con_list_name" + i, lm);
+
+  //          _hmLists.put(tmp.getName(), tmp);
 
         }
-        System.out.println( "Number of JLists = " +_hmLists.size());
-        for (JList j : _hmLists.values()){
-            System.out.println(j.getName() + " size = " + j.getModel().getSize());//;.toString());//.values().toString());
 
-            for (int i = 0; i < j.getModel().getSize() ; i++) {
+//        System.out.println( "Number of JLists = " +_view.get_all_lists().size());
+//        for (JList j : _view.get_all_lists()){
+//            System.out.println(j.getName() + " size = " + j.getModel().getSize());//;.toString());//.values().toString());
+//
+//            for (int i = 0; i < j.getModel().getSize() ; i++) {
+//
+//
+//                System.out.println(i + " : " + j.getModel().getElementAt(i));
+//            }
+//
+//    }
 
+        _view.setList_action_listener(new AddActionListener(_view));
 
-                System.out.println(i + " : " + j.getModel().getElementAt(i));
-            }
-
-    }
-    _test_add.addActionListener(new AddActionListener());
-
+            _view.createGUI();
     }
 
 
     public JPanel createGUI() {
-        JPanel p = new JPanel(new MigLayout(""));
-        for (JComponent c : _list_of_lists) {
-            p.add(c, "gap 20");
-        }
-        p.add(_test_add, "newline");
-        p.validate();
-        return p;
+//        JPanel p = new JPanel(new MigLayout(""));
+//        for (JComponent c : _list_of_lists) {
+//           // p.add(c, "gap 20");
+//        }
+//        JPanel lp = new ListPanel(_dao.getListValues(0), null);
+//        p.add(lp);
+//        p.add(_test_add, "newline");
+//        p.validate();
+        return _view.getPanel();
     }
 }
+
+
 class AddActionListener implements ActionListener
 {
 
-    @Override
+    private ArrayList<JList> _jlists;
+    AddActionListener(PunctureView pView){
+        _jlists=pView.get_all_lists();
+    }
+
     public void actionPerformed(ActionEvent e) {
         System.out.println();
         System.out.println(java.time.LocalTime.now());
 
-        for (JList k: PunctureController._list_of_lists)
+        for (JList k: _jlists)
         {
-
-            System.out.println(k.getName() + " : " + k.getSelectedValue().toString());
-    }
+            if (k.getSelectedIndex()!=-1)
+            {
+                //System.out.println(k.getName() + " : " + k.getSelectedValue().toString());
+                _dao.setSelected(k.getName(), k.getSelectedValue().toString());
+            }
+            //TODO: SEND TO DAO
+        }
     }
 }
 
