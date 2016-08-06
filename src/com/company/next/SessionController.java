@@ -1,5 +1,7 @@
 package com.company.next;
 
+import com.company.Main;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,8 +27,9 @@ public class SessionController {
 
     public void updateSessionView() {
         //match views fields with models dat
-        _view.createGUI();
 
+        _view.createGUI();
+        Main.APP_FRAME.setJMenuBar(_view.getMenuBar());
     }
 
     class ControllerListener implements ActionListener{

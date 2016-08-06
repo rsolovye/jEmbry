@@ -106,8 +106,7 @@ public class ListSelectionDemo extends JPanel {
         listContainer.setBorder(BorderFactory.createTitledBorder(
                                                 "List"));
         listContainer.add(listPane);
-        
-	topHalf.setBorder(BorderFactory.createEmptyBorder(5,5,0,5));
+        topHalf.setBorder(BorderFactory.createEmptyBorder(5,5,0,5));
         topHalf.add(listContainer);
         //topHalf.add(tableContainer);
 

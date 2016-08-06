@@ -13,12 +13,13 @@ public class SessionView {
     private  ActionListener _actionListener;
     private JPanel view_master;
     private String toStr;
-
+    private JMenuBar menuBar;
     public SessionView(){
+        menuBar = new JMenuBar();
+        view_master = new JPanel();
 
+        toStr = "SessionView: END_OF_CONSTRUCTOR";
 
-    view_master = new JPanel();
-     toStr = "SessionView: END_OF_CONSTRUCTOR";
     }
 
     public void setActionListener(ActionListener pListener){
@@ -26,17 +27,22 @@ public class SessionView {
 
     }
 
+    private void buildMenu(){
+        JMenu fileMenu = new JMenu("File");
+        menuBar.add(fileMenu);
+        menuBar.add(new JLabel("Embr Name: "));
 
-    public MenuBar getMenuBar() {
-        MenuBar menuBar = new MenuBar();
+    }
+
+    public JMenuBar getMenuBar() {
 
 
         return menuBar;
 
     }
-public String toString(){
-    return toStr + "SessionView: toStrrrrrRing";
-}
+
+
+
 public void createGUI(){
     view_master.setLayout(new MigLayout());
     view_master.add(new JLabel("-=====================-"));
@@ -46,8 +52,11 @@ public void createGUI(){
 
     view_master.add(addButton);
 }
-    public JPanel getPanel(){
-    return view_master;
+    public JComponent show(){
+    return menuBar;
     }
 
+    public String toString(){
+        return toStr + "SessionView: toStrrrrrRing";
+    }
 }

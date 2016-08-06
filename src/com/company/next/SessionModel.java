@@ -6,7 +6,7 @@ package com.company.next;
 public class SessionModel {
 
 
-
+private String User_Name;
     /**
      *  Controller send data here collectrd from the view
      */
