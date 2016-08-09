@@ -2,10 +2,7 @@ package com.company;
 
 //import com.company.next.PunctureController;
 import com.company.Utilities.GUI.Utils;
-import com.company.next.DB_TEMP;
-import com.company.next.SessionController;
-import com.company.next.SessionModel;
-import com.company.next.SessionView;
+import com.company.next.*;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -39,8 +36,10 @@ public static String APP_NAME="jEmbry";
             ListSelectionModel lsm = (ListSelectionModel)e.getSource();
             if (!lsm.getValueIsAdjusting() && lsm.getMinSelectionIndex()!=-1) {
                 System.out.println(user_list.getSelectedValue());
+                session.setUser((String) user_list.getSelectedValue());
+
             }
-            
+
 
         });
 
