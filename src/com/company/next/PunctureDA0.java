@@ -12,6 +12,7 @@ public class PunctureDA0 {
 
     private final HashMap<String, String[]> hmListValues;
     private final HashMap<String, String> hmSelectedValues;
+
     public PunctureDA0(){
         hmListValues = DB_TEMP.MAPPED_LISTS; ; //new HashMap<String, String[]>();
         hmSelectedValues = new HashMap<String, String>();

@@ -12,6 +12,8 @@ public class DB_TEMP {
             DOCTORS = {"Гвасалия Р.Г.", "Шарфи Ю.Н.", "Геркулов Д.А.", "Жарова М.В."},
             EMB = {"Лямина ИВ", "Мурза ГВ", "Хандога АО", "Соловьев РС", "Черноштан КВ"},
             FEM_EGG_STATE = {"свежие", "крио"},
+            M_STATE = {"свежие", "крио"},
+            M_SOURCE = {"пациент", "донор"},
             FEM_SOURCE = {"пациентка", "донор"};
     
 public static HashMap<String, String[]> MAPPED_LISTS = new HashMap<>();

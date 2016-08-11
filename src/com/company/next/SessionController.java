@@ -23,6 +23,8 @@ public class SessionController {
      _view.setActionListener(_controllerListener);
 
 
+
+
  }
 
     public void updateSessionView() {
